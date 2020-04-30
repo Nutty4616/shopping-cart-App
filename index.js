@@ -4,16 +4,18 @@ const cookieSession = require("cookie-session");
 const authRouter = require('./routes/admin/auth');
 
 const app = express();
+
 app.use(
   bodyParser.urlencoded({
-    extended: true,
+    extended: true
   })
 );
-app.use(authRouter);
+
 app.use(cookieSession({
   keys: ['lsdfsd']
 }));
 
+app.use(authRouter);
 
 app.listen(3000, () => {
   console.log("listening...");

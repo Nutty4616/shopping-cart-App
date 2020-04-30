@@ -6,7 +6,7 @@ module.exports = ({
         <html>
             <head></head>
             <body>
-                ${content}
+              ${content}
             </body>
         </html>
     `;
