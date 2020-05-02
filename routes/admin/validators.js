@@ -38,20 +38,20 @@ module.exports = {
                 throw new Error('Passwords must match');
             }
         }),
-    requireEmailExist: check('email')
+    requireEmailExists: check('email')
         .trim()
         .normalizeEmail()
         .isEmail()
         .withMessage('Must provide a valid email')
-        .custom(async (email) => {
+        .custom(async email => {
             const user = await usersRepo.getOneBy({
                 email
             });
             if (!user) {
-                throw new Error('Email not found');
+                throw new Error('Email not found!');
             }
         }),
-    requireValidePasswordForUser: check('password')
+    requireValidPasswordForUser: check('password')
         .trim()
         .custom(async (password, {
             req
@@ -62,12 +62,13 @@ module.exports = {
             if (!user) {
                 throw new Error('Invalid password');
             }
+
             const validPassword = await usersRepo.comparePasswords(
                 user.password,
                 password
             );
             if (!validPassword) {
-                return res.send('Invalid password');
+                throw new Error('Invalid password');
             }
         })
 };
